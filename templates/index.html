@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FastAPI Welcome</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background: #f4f4f9;
+            color: #333;
+        }
+
+        h1 {
+            color: #009688;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Hello, {{ username }}!</h1>
+
+        <p>{{ message }}</p>
+
+        <p>
+            Current page: {{ request.url.path }}
+        </p>
+
+    </div>
+
+</body>
+
+</html>
