@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
@@ -69,3 +70,42 @@ def read_web_page(request: Request):
             "message": "This page is served dynamically using Jinja2!"
         }
     )
+
+class Student(BaseModel):
+    name: str
+    age: int
+
+
+@app.post("/students")
+def create_student(student: Student):
+    return {
+        "message": f"Student {student.name} created successfully",
+        "age": student.age
+    }
+
+
+
+# class Blog(BaseModel):
+#   title: str
+#   body: str
+#   id: int
+#   published: Optional[bool] = True
+
+
+
+# @app.post("/blog")
+# def create_blog(
+#     title: str = Body(...),
+#     body: str = Body(...),
+#     id: int = Body(...),
+#     published: bool = Body(True),
+# ):
+#     return {
+#         "message": "Saved!",
+#         "blog": {
+#             "title": title,
+#             "body": body,
+#             "id": id,
+#             "published": published,
+#         },
+#     }
