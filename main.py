@@ -18,6 +18,7 @@ def read_root():
     }
 
 
+
 # 2. Path and query parameters
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str | None = None):
@@ -57,6 +58,7 @@ def get_user(user_id: int, request: Request):
         "user_id": user_id,
         "name": request.query_params.get("name")
     }
+
 
 
 # 7. Render an HTML page using Jinja2
