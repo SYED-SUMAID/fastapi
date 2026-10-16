@@ -17,3 +17,8 @@ blog = Blog(
 )
 
 print(blog.title)
+print(blog.body)
+print(blog.id)
+
+
+
