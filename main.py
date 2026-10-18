@@ -60,7 +60,6 @@ def get_user(user_id: int, request: Request):
     }
 
 
-
 # 7. Render an HTML page using Jinja2
 @app.get("/web", response_class=HTMLResponse)
 def read_web_page(request: Request):
@@ -111,3 +110,39 @@ def create_student(student: Student):
 #             "published": published,
 #         },
 #     }
+
+
+products = [
+    {
+        "product_id": 1,
+        "name": "Smartphone",
+        "description": "A smartphone with 128GB storage and a high-quality camera.",
+        "price": 700,
+        "quantity": 15
+    },
+    {
+        "product_id": 2,
+        "name": "Laptop",
+        "description": "A laptop with 16GB RAM and 512GB SSD storage.",
+        "price": 1200,
+        "quantity": 10
+    },
+    {
+        "product_id": 3,
+        "name": "Pen",
+        "description": "A smooth-writing blue ink ballpoint pen.",
+        "price": 2,
+        "quantity": 100
+    },
+    {
+        "product_id": 4,
+        "name": "Table",
+        "description": "A wooden study table suitable for home or office use.",
+        "price": 150,
+        "quantity": 8
+    }
+]
+
+@app.get("/products")
+def get_all_prod():
+    return products
