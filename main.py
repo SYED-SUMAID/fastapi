@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Body
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from fastapi.templating import Jinja2Templates
@@ -156,3 +156,9 @@ def get_prod_by_id(ID:int):
             return product
         
     return "product not found"
+
+@app.post("/product")
+def add_prod(prod: dict = Body(...)):
+    products.append(prod)
+    return prod
+
