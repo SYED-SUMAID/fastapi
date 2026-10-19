@@ -111,6 +111,11 @@ def create_student(student: Student):
 #         },
 #     }
 
+class Product(BaseModel):
+    name:str
+    description:str
+    price:int
+    quantity:int
 
 products = [
     {
@@ -162,3 +167,26 @@ def add_prod(prod: dict = Body(...)):
     products.append(prod)
     return prod
 
+@app.put ("/product/{id}")
+def update_cart(id:int,product:Product):
+    for p in products:
+        if p["product_id"] == id:
+            p.update(product.model_dump())
+            return{
+                "message": "product update successfully",
+                "product": p
+            }
+
+    return {"message": "product not found"}     
+
+
+@app.delete("/product/{id}")
+def delete_product(id:int):
+    for p in products:
+        if p["product_id"] == id:
+            products.remove(p)
+            return {
+                "message": "product deleted successfully",
+                "product": p
+            }
+    return {"message": "product not found"}
