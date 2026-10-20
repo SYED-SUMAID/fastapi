@@ -38,6 +38,7 @@ Create a file named `main.py`.
 
     {
         "message": "Hello World"
+        "status": "success"
     }
 
 ## 4. Running the Application
@@ -55,7 +56,7 @@ Open the application at:
 
     http://127.0.0.1:8000
 
-
+![alt text](<Screenshot From 2026-10-20 11-33-39.png>)
 
 ## 5. Routes and Endpoints
 
@@ -105,6 +106,8 @@ Path parameters allow us to pass values directly through a URL.
 
     http://127.0.0.1:8000/users/10
 
+![alt text](<Screenshot From 2026-10-20 12-11-53.png>)
+
 ### Output
 
     {
@@ -130,6 +133,8 @@ Query parameters pass additional information through the URL, usually after a `?
 ### Example URL
 
     http://127.0.0.1:8000/products?category=electronics
+
+![alt text](<Screenshot From 2026-10-20 14-33-54.png>)
 
 ### Output
 
