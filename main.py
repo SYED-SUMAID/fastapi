@@ -188,3 +188,5 @@ def delete_product(id:int):
             return {
                 "message": "product deleted successfully",
                 "product": p
+            }
+    return {"message": "product not found"}
