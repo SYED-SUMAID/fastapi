@@ -190,3 +190,27 @@ def delete_product(id:int):
                 "product": p
             }
     return {"message": "product not found"}
+
+class ProductUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    price: int | None = None
+    quantity: int | None = None
+
+
+@app.patch("/product/{id}")
+def patch_product(id: int, product: ProductUpdate):
+
+    for p in products:
+        if p["product_id"] == id:
+
+            update_data = product.model_dump(exclude_unset=True)
+
+            p.update(update_data)
+
+            return {
+                "message": "Product updated successfully",
+                "product": p
+            }
+
+    return {"message": "Product not found"}
