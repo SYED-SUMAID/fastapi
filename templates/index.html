@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1015,14 +1016,14 @@
     const API = {
         list: "/products",
         create: "/product",
-        item: (id) => `/product/${encodeURIComponent(id)}`
+        item: (id) => `/product/₹{encodeURIComponent(id)}`
     };
 
     let products = [];
     let editingId = null;
     let toastTimer = null;
 
-    const $ = (id) => document.getElementById(id);
+    const ₹ = (id) => document.getElementById(id);
 
     function escapeHTML(value) {
         return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -1043,7 +1044,7 @@
     }
 
     function showToast(message) {
-        const toast = $("toast");
+        const toast = ₹("toast");
         toast.textContent = message;
         toast.classList.add("show");
 
@@ -1054,14 +1055,14 @@
     }
 
     function showMessage(message, type = "success") {
-        const box = $("formMessage");
+        const box = ₹("formMessage");
         box.textContent = message;
-        box.className = `message show ${type}`;
+        box.className = `message show ₹{type}`;
     }
 
     function hideMessage() {
-        $("formMessage").className = "message";
-        $("formMessage").textContent = "";
+        ₹("formMessage").className = "message";
+        &#8377;("formMessage").textContent = "";
     }
 
     function normalizeProduct(product) {
@@ -1082,23 +1083,23 @@
     }
 
     function renderProducts() {
-        const query = $("searchInput").value.trim().toLowerCase();
+        const query = &#8377;("searchInput").&#8377;alue.trim().toLowerCase();
 
         const filtered = products.filter((product) => {
-            const searchable = `${product.name} ${product.description} ${product.product_id}`.toLowerCase();
+            const searchable = `&#8377;{product.name} &#8377;{product.description} &#8377;{product.product_id}`.toLowerCase();
             return searchable.includes(query);
         });
 
-        $("productCount").textContent = `${filtered.length} ITEM${filtered.length === 1 ? "" : "S"}`;
+        &#8377;("productCount").textContent = `&#8377;{filtered.length} ITEM&#8377;{filtered.length === 1 ? "" : "S"}`;
 
-        const table = $("productTable");
+        const table = &#8377;("productTable");
 
         if (!filtered.length) {
             table.innerHTML = `
                 <tr>
                     <td colspan="4" class="empty">
-                        <strong>${query ? "No matching products" : "Your inventory is empty"}</strong>
-                        ${query ? "Try another search term." : "Use the form to add your first product."}
+                        <strong>&#8377;{query ? "No matching products" : "Your in&#8377;entory is empty"}</strong>
+                        &#8377;{query ? "Try another search term." : "Use the form to add your first product."}
                     </td>
                 </tr>
             `;
@@ -1108,29 +1109,29 @@
         table.innerHTML = filtered.map((product) => {
             const id = escapeHTML(product.product_id);
             const name = escapeHTML(product.name);
-            const description = escapeHTML(product.description || "No description provided");
+            const description = escapeHTML(product.description || "No description pro&#8377;ided");
             const quantity = product.quantity;
             const badgeClass = stockClass(quantity);
 
             return `
                 <tr>
                     <td>
-                        <div class="product-name">${name}</div>
-                        <div class="product-description">${description}</div>
-                        <div class="product-id" style="margin-top: 7px;">ID: ${id}</div>
+                        <di&#8377; class="product-name">&#8377;{name}</div>
+                        <div class="product-description">&#8377;{description}</div>
+                        <div class="product-id" style="margin-top: 7px;">ID: &#8377;{id}</div>
                     </td>
-                    <td>${formatCurrency(product.price)}</td>
+                    <td>&#8377;{formatCurrency(product.price)}</td>
                     <td>
-                        <span class="stock ${badgeClass}">
-                            ${quantity === 0 ? "Out of stock" : `${quantity} units`}
+                        <span class="stock &#8377;{badgeClass}">
+                            &#8377;{quantity === 0 ? "Out of stock" : `&#8377;{quantity} units`}
                         </span>
                     </td>
                     <td>
                         <div class="actions">
                             <button class="icon-btn" type="button" title="Edit product"
-                                data-action="edit" data-id="${id}">✎</button>
+                                data-action="edit" data-id="&#8377;{id}">✎</button>
                             <button class="icon-btn delete" type="button" title="Delete product"
-                                data-action="delete" data-id="${id}">×</button>
+                                data-action="delete" data-id="&#8377;{id}">×</button>
                         </div>
                     </td>
                 </tr>
@@ -1147,17 +1148,17 @@
             (product) => product.quantity <= 5
         ).length;
 
-        $("totalProducts").textContent = products.length.toLocaleString("en-IN");
-        $("totalUnits").textContent = totalUnits.toLocaleString("en-IN");
+        &#8377;("totalProducts").textContent = products.length.toLocaleString("en-IN");
+        &#8377;("totalUnits").textContent = totalUnits.toLocaleString("en-IN");
 
-        $("inventoryValue").textContent = new Intl.NumberFormat("en-IN", {
+        &#8377;("inventoryValue").textContent = new Intl.NumberFormat("en-IN", {
             style: "currency",
             currency: "INR",
             notation: inventoryValue >= 1000000 ? "compact" : "standard",
             maximumFractionDigits: 1
         }).format(inventoryValue);
 
-        $("lowStock").textContent = lowStock.toLocaleString("en-IN");
+        &#8377;("lowStock").textContent = lowStock.toLocaleString("en-IN");
     }
 
     async function apiRequest(url, options = {}) {
@@ -1170,7 +1171,7 @@
         });
 
         if (!response.ok) {
-            let detail = `Request failed with status ${response.status}`;
+            let detail = `Request failed with status &#8377;{response.status}`;
 
             try {
                 const body = await response.json();
@@ -1193,8 +1194,8 @@
     }
 
     async function loadProducts() {
-        $("tableStatus").textContent = "FETCHING PRODUCTS...";
-        $("connectionText").textContent = "CONNECTING";
+        &#8377;("tableStatus").textContent = "FETCHING PRODUCTS...";
+        &#8377;("connectionText").textContent = "CONNECTING";
 
         try {
             const data = await apiRequest(API.list);
@@ -1207,37 +1208,37 @@
             renderProducts();
             updateStats();
 
-            $("connectionText").textContent = "CONNECTED";
-            $("tableStatus").textContent = `${products.length} PRODUCTS LOADED`;
-            $("lastUpdated").textContent = `● UPDATED ${new Date().toLocaleTimeString()}`;
+            &#8377;("connectionText").textContent = "CONNECTED";
+            &#8377;("tableStatus").textContent = `&#8377;{products.length} PRODUCTS LOADED`;
+            &#8377;("lastUpdated").textContent = `● UPDATED &#8377;{new Date().toLocaleTimeString()}`;
         } catch (error) {
-            $("connectionText").textContent = "API ERROR";
-            $("tableStatus").textContent = "FAILED TO LOAD PRODUCTS";
-            $("productTable").innerHTML = `
+            &#8377;("connectionText").textContent = "API ERROR";
+            &#8377;("tableStatus").textContent = "FAILED TO LOAD PRODUCTS";
+            &#8377;("productTable").innerHTML = `
                 <tr>
                     <td colspan="4" class="empty">
                         <strong>Unable to load inventory</strong>
-                        ${escapeHTML(error.message)}
+                        &#8377;{escapeHTML(error.message)}
                         <br><br>
                         Confirm that your FastAPI server is running and GET /products works in Swagger.
                     </td>
                 </tr>
             `;
 
-            $("totalProducts").textContent = "—";
-            $("totalUnits").textContent = "—";
-            $("inventoryValue").textContent = "—";
-            $("lowStock").textContent = "—";
+            &#8377;("totalProducts").textContent = "—";
+            &#8377;("totalUnits").textContent = "—";
+            &#8377;("inventoryValue").textContent = "—";
+            &#8377;("lowStock").textContent = "—";
         }
     }
 
     function resetForm() {
         editingId = null;
-        $("productForm").reset();
-        $("formTitle").textContent = "Add New Product";
-        $("formMode").textContent = "NEW";
-        $("submitBtn").textContent = "+ Add Product";
-        $("cancelEditBtn").hidden = true;
+        &#8377;("productForm").reset();
+        &#8377;("formTitle").textContent = "Add New Product";
+        &#8377;("formMode").textContent = "NEW";
+        &#8377;("submitBtn").textContent = "+ Add Product";
+        &#8377;("cancelEditBtn").hidden = true;
         hideMessage();
     }
 
@@ -1253,18 +1254,18 @@
 
         editingId = product.product_id;
 
-        $("name").value = product.name;
-        $("description").value = product.description;
-        $("price").value = product.price;
-        $("quantity").value = product.quantity;
+        &#8377;("name").value = product.name;
+        &#8377;("description").value = product.description;
+        &#8377;("price").value = product.price;
+        &#8377;("quantity").value = product.quantity;
 
-        $("formTitle").textContent = "Edit Product";
-        $("formMode").textContent = `EDIT #${product.product_id}`;
-        $("submitBtn").textContent = "Save Changes";
-        $("cancelEditBtn").hidden = false;
+        &#8377;("formTitle").textContent = "Edit Product";
+        &#8377;("formMode").textContent = `EDIT #&#8377;{product.product_id}`;
+        &#8377;("submitBtn").textContent = "Save Changes";
+        &#8377;("cancelEditBtn").hidden = false;
 
         hideMessage();
-        $("name").focus();
+        &#8377;("name").focus();
 
         if (window.innerWidth < 950) {
             document.querySelector(".form-panel").scrollIntoView({
@@ -1281,7 +1282,7 @@
 
         if (!product) return;
 
-        if (!confirm(`Delete "${product.name}" from your inventory?`)) return;
+        if (!confirm(`Delete "&#8377;{product.name}" from your inventory?`)) return;
 
         try {
             await apiRequest(API.item(id), { method: "DELETE" });
@@ -1293,18 +1294,18 @@
             showToast("Product deleted successfully.");
             await loadProducts();
         } catch (error) {
-            showToast(`Delete failed: ${error.message}`);
+            showToast(`Delete failed: &#8377;{error.message}`);
         }
     }
 
-    $("productForm").addEventListener("submit", async (event) => {
+    &#8377;("productForm").addEventListener("submit", async (event) => {
         event.preventDefault();
         hideMessage();
 
-        const name = $("name").value.trim();
-        const description = $("description").value.trim();
-        const price = Number($("price").value);
-        const quantity = Number($("quantity").value);
+        const name = &#8377;("name").value.trim();
+        const description = &#8377;("description").value.trim();
+        const price = Number(&#8377;("price").value);
+        const quantity = Number(&#8377;("quantity").value);
 
         if (!name) {
             showMessage("Product name is required.", "error");
@@ -1322,7 +1323,7 @@
         }
 
         const payload = { name, description, price, quantity };
-        const button = $("submitBtn");
+        const button = &#8377;("submitBtn");
 
         button.disabled = true;
         button.textContent = editingId !== null ? "Saving..." : "Adding...";
@@ -1361,7 +1362,7 @@
         }
     });
 
-    $("productTable").addEventListener("click", (event) => {
+    &#8377;("productTable").addEventListener("click", (event) => {
         const button = event.target.closest("button[data-action]");
         if (!button) return;
 
@@ -1376,9 +1377,9 @@
         }
     });
 
-    $("searchInput").addEventListener("input", renderProducts);
-    $("refreshBtn").addEventListener("click", loadProducts);
-    $("cancelEditBtn").addEventListener("click", resetForm);
+    &#8377;("searchInput").addEventListener("input", renderProducts);
+    &#8377;("refreshBtn").addEventListener("click", loadProducts);
+    &#8377;("cancelEditBtn").addEventListener("click", resetForm);
 
     loadProducts();
 </script>
