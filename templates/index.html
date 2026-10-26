@@ -1,48 +1,39 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ProductVault | Inventory Dashboard</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #080b12;
-            --panel: #101520;
-            --panel-light: #151c29;
-            --border: #252e40;
-            --text: #e8edf7;
-            --muted: #8793a8;
-            --cyan: #51e5ff;
-            --purple: #a78bfa;
-            --green: #50e3a4;
-            --red: #ff6b81;
-            --yellow: #ffd166;
+            --bg: #19699e;
+            --panel: #26385b;
+            --border: #263449;
+            --text: #7ccaca;
+            --muted: #8d9bb2;
+            --cyan: #d3cc41;
+            --purple: #a99aff;
+            --green: #dbdf57;
+            --red: #96172c;
+            --yellow: #e1b05b;
         }
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            min-height: 100vh;
+            margin: 0;
             background:
-                radial-gradient(ellipse at 10% 0%, #14263a 0%, transparent 35%),
-                radial-gradient(ellipse at 90% 10%, #211539 0%, transparent 30%),
+                radial-gradient(ellipse at 10% 0%, #173047 0, transparent 35%),
+                radial-gradient(ellipse at 90% 10%, #271b43 0, transparent 30%),
                 var(--bg);
             color: var(--text);
-            font-family: 'Inter', sans-serif;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
 
-        button, input, textarea {
+        button, input, textarea, select {
             font: inherit;
         }
 
@@ -56,209 +47,130 @@
         }
 
         .sidebar {
-            width: 245px;
-            flex-shrink: 0;
+            width: 235px;
             padding: 28px 18px;
-            background: rgba(9, 13, 22, 0.94);
+            background: #080c14eF;
             border-right: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
         .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 10px 36px;
-        }
-
-        .brand-icon {
-            display: grid;
-            place-items: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            color: #080b12;
-            font-size: 21px;
+            font-size: 22px;
             font-weight: 800;
+            margin-bottom: 45px;
         }
 
-        .brand-name {
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .brand-name span {
+        .brand span {
             color: var(--cyan);
         }
 
-        .brand-subtitle {
-            margin-top: 5px;
-            color: var(--muted);
-            font-family: 'Space Mono', monospace;
+        .brand small {
+            display: block;
+            margin-top: 7px;
             font-size: 9px;
-            letter-spacing: 1.4px;
+            letter-spacing: 2px;
+            color: var(--muted);
         }
 
         .nav-label {
-            padding: 0 12px;
-            margin-bottom: 12px;
-            color: #68758b;
-            font-family: 'Space Mono', monospace;
+            color: #697a94;
             font-size: 10px;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
         }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 13px 14px;
-            margin-bottom: 7px;
-            border: 1px solid transparent;
+            padding: 13px;
+            margin-bottom: 8px;
             border-radius: 10px;
             color: var(--muted);
+            cursor: pointer;
             font-size: 13px;
         }
 
-        .nav-item.active {
-            background: rgba(81, 229, 255, 0.09);
-            border-color: rgba(81, 229, 255, 0.18);
+        .nav-item.active,
+        .nav-item:hover {
             color: var(--cyan);
+            background: #58e1f211;
+            border: 1px solid #58e1f22b;
         }
 
-        .nav-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 17px;
-        }
-
-        .sidebar-bottom {
-            margin-top: 45px;
-            padding: 17px;
+        .sidebar-footer {
+            margin-top: 80px;
+            padding: 15px;
+            background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 12px;
-            background: var(--panel);
-        }
-
-        .status-dot {
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            margin-right: 7px;
-            border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 10px rgba(80, 227, 164, 0.6);
-        }
-
-        .sidebar-bottom strong {
             font-size: 12px;
         }
 
-        .sidebar-bottom p {
-            margin-top: 9px;
+        .sidebar-footer p {
             color: var(--muted);
-            font-size: 11px;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         .main {
-            min-width: 0;
             flex: 1;
-            padding: 30px 38px 45px;
+            min-width: 0;
+            padding: 32px;
         }
 
-        .topbar {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
-            margin-bottom: 38px;
+            margin-bottom: 30px;
         }
 
         .eyebrow {
             color: var(--cyan);
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
             letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
         h1 {
-            margin-top: 10px;
             font-size: clamp(25px, 3vw, 34px);
-            font-weight: 800;
-            letter-spacing: -1.3px;
+            letter-spacing: -1px;
+            margin: 0;
         }
 
         .subtitle {
-            margin-top: 9px;
             color: var(--muted);
             font-size: 13px;
-            line-height: 1.7;
+            margin-top: 10px;
         }
 
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .primary {
+            border: none;
+            padding: 12px 17px;
+            border-radius: 10px;
+            background: linear-gradient(110deg, var(--cyan), #a5b1ff);
+            color: #07111b;
+            font-weight: 800;
+            font-size: 12px;
         }
 
-        .connection {
-            padding: 10px 13px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            color: var(--muted);
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            white-space: nowrap;
-        }
-
-        .avatar {
-            display: grid;
-            place-items: center;
-            width: 40px;
-            height: 40px;
-            border: 1px solid #354258;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #24354b, #302244);
-            color: var(--cyan);
-            font-weight: 700;
+        .primary:disabled {
+            opacity: .6;
+            cursor: wait;
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 17px;
-            margin-bottom: 28px;
+            gap: 15px;
+            margin-bottom: 22px;
         }
 
-        .stat-card {
-            position: relative;
-            overflow: hidden;
-            padding: 22px;
+        .stat {
+            background: linear-gradient(145deg, #121d2d, #0e1420);
             border: 1px solid var(--border);
             border-radius: 15px;
-            background: linear-gradient(145deg, rgba(21, 28, 41, 0.96), rgba(13, 18, 29, 0.96));
-        }
-
-        .stat-card::after {
-            position: absolute;
-            right: -30px;
-            bottom: -45px;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: var(--glow, rgba(81, 229, 255, 0.07));
-            filter: blur(30px);
-            content: "";
-        }
-
-        .stat-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
+            padding: 20px;
+            min-width: 0;
         }
 
         .stat-label {
@@ -266,427 +178,276 @@
             font-size: 12px;
         }
 
-        .stat-icon {
-            display: grid;
-            place-items: center;
-            width: 34px;
-            height: 34px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            background: #151e2d;
-            color: var(--accent, var(--cyan));
-            font-size: 16px;
-        }
-
-        .stat-number {
-            margin-top: 20px;
-            font-size: 32px;
+        .stat-value {
+            font-size: clamp(22px, 2.2vw, 30px);
             font-weight: 800;
-            letter-spacing: -1px;
+            margin-top: 17px;
+            overflow-wrap: anywhere;
         }
 
-        .stat-foot {
-            margin-top: 8px;
+        .stat-note {
             color: var(--muted);
             font-size: 11px;
+            margin-top: 8px;
         }
 
-        .stat-foot span {
-            color: var(--green);
-        }
-
-        .content-grid {
+        .content {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 330px;
+            grid-template-columns: minmax(0, 1fr) 300px;
+            gap: 18px;
             align-items: start;
-            gap: 22px;
         }
 
         .panel {
-            min-width: 0;
-            overflow: hidden;
+            background: #101827ed;
             border: 1px solid var(--border);
             border-radius: 15px;
-            background: rgba(16, 21, 32, 0.94);
+            min-width: 0;
+            overflow: hidden;
         }
 
         .panel-header {
+            padding: 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             gap: 12px;
-            padding: 22px;
             border-bottom: 1px solid var(--border);
         }
 
         .panel-title {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
         }
 
-        .panel-description {
-            margin-top: 6px;
+        .panel-subtitle {
             color: var(--muted);
             font-size: 11px;
+            margin-top: 6px;
         }
 
-        .count-badge {
-            padding: 6px 9px;
-            border: 1px solid #284252;
-            border-radius: 7px;
-            background: rgba(81, 229, 255, 0.06);
-            color: var(--cyan);
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-        }
-
-        .toolbar {
-            display: flex;
-            gap: 10px;
-            padding: 17px 22px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .search {
-            width: 100%;
-            min-width: 0;
-            padding: 11px 13px;
-            outline: none;
+        .secondary {
+            padding: 10px 12px;
             border: 1px solid var(--border);
             border-radius: 9px;
-            background: #0b101a;
-            color: var(--text);
+            background: #151f30;
+            color: var(--muted);
             font-size: 12px;
         }
 
-        .search:focus,
-        .field input:focus,
-        .field textarea:focus {
+        .search-row {
+            padding: 15px 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: #090f19;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 11px 12px;
+            color: var(--text);
+            outline: none;
+            font-size: 12px;
+        }
+
+        input:focus, textarea:focus, select:focus {
             border-color: var(--cyan);
-            box-shadow: 0 0 0 3px rgba(81, 229, 255, 0.07);
+        }
+
+        .search {
+            flex: 1;
+            min-width: 0;
         }
 
         .table-wrap {
+            width: 100%;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
-        }
-
-        thead {
-            background: rgba(255, 255, 255, 0.015);
+            white-space: nowrap;
         }
 
         th {
-            padding: 14px 18px;
-            color: #77849a;
-            font-family: 'Space Mono', monospace;
-            font-size: 9px;
-            font-weight: 400;
+            text-align: left;
+            color: #75849c;
+            font-size: 10px;
             letter-spacing: 1px;
-            text-transform: uppercase;
-            white-space: nowrap;
+            padding: 13px 17px;
+            border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 17px 18px;
-            border-top: 1px solid rgba(37, 46, 64, 0.7);
-            color: #cbd4e3;
+            padding: 15px 17px;
             font-size: 12px;
-            vertical-align: middle;
-        }
-
-        tbody tr {
-            transition: background 0.2s;
+            border-bottom: 1px solid #26344980;
         }
 
         tbody tr:hover {
-            background: rgba(81, 229, 255, 0.025);
+            background: #ffffff04;
         }
 
         .product-name {
-            color: var(--text);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .product-description {
-            max-width: 190px;
-            margin-top: 5px;
-            overflow: hidden;
+            max-width: 180px;
             color: var(--muted);
             font-size: 10px;
+            margin-top: 5px;
+            overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .product-id {
-            color: #74839a;
-            font-family: 'Space Mono', monospace;
+        .price {
+            color: var(--cyan);
+            font-weight: 800;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 20px;
             font-size: 10px;
+            font-weight: 700;
         }
 
-        .stock {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 8px;
-            border-radius: 6px;
-            background: rgba(80, 227, 164, 0.07);
+        .in-stock {
             color: var(--green);
-            font-size: 10px;
+            background: #57dfa014;
         }
 
-        .stock.low {
-            background: rgba(255, 209, 102, 0.08);
+        .low-stock {
             color: var(--yellow);
+            background: #ffca7014;
         }
 
-        .stock.out {
-            background: rgba(255, 107, 129, 0.08);
+        .out-stock {
             color: var(--red);
+            background: #ff718814;
         }
 
         .actions {
             display: flex;
-            gap: 7px;
+            gap: 6px;
         }
 
-        .icon-btn {
-            display: grid;
-            place-items: center;
-            width: 29px;
-            height: 29px;
+        .action-btn {
+            padding: 7px 9px;
             border: 1px solid var(--border);
+            background: #151f30;
+            color: var(--muted);
             border-radius: 7px;
-            background: #141b28;
-            color: #aebbd0;
-            font-size: 12px;
+            font-size: 11px;
         }
 
-        .icon-btn:hover {
-            border-color: var(--cyan);
+        .action-btn:hover {
             color: var(--cyan);
         }
 
-        .icon-btn.delete:hover {
-            border-color: var(--red);
-            color: var(--red);
-        }
-
         .empty {
-            padding: 42px 20px;
-            color: var(--muted);
+            padding: 30px;
             text-align: center;
-            font-size: 12px;
-            line-height: 1.8;
+            color: var(--muted);
+            white-space: normal;
+            line-height: 1.6;
         }
 
-        .empty strong {
-            display: block;
-            margin-bottom: 6px;
-            color: var(--text);
-            font-size: 14px;
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px 20px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .right-column {
+            display: grid;
+            gap: 18px;
         }
 
         .form-body {
-            padding: 22px;
+            padding: 20px;
         }
 
-        .form-note {
-            margin-bottom: 21px;
-            padding: 12px;
-            border: 1px solid rgba(81, 229, 255, 0.13);
-            border-radius: 9px;
-            background: rgba(81, 229, 255, 0.045);
-            color: #a4b4c9;
+        .field {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #b4c0d2;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            min-height: 75px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .form-buttons button {
+            flex: 1;
+        }
+
+        .alerts {
+            padding: 18px;
+        }
+
+        .alerts p {
+            color: var(--muted);
             font-size: 11px;
             line-height: 1.7;
         }
 
-        .field {
-            margin-bottom: 17px;
-        }
-
-        .field label {
-            display: block;
-            margin-bottom: 8px;
-            color: #aab6c9;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .field input,
-        .field textarea {
-            width: 100%;
-            padding: 12px;
-            outline: none;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            background: #0b101a;
-            color: var(--text);
-            font-size: 12px;
-            transition: border 0.2s, box-shadow 0.2s;
-        }
-
-        .field textarea {
-            min-height: 84px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-
-        .field input::placeholder,
-        .field textarea::placeholder {
-            color: #536075;
-        }
-
-        .field-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 15px;
-            border: 1px solid transparent;
-            border-radius: 9px;
-            font-size: 12px;
-            font-weight: 700;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(100deg, var(--cyan), #8bbdff);
-            color: #07111a;
-        }
-
-        .btn-secondary {
-            border-color: var(--border);
-            background: #151c29;
-            color: var(--text);
-        }
-
-        .btn:disabled {
-            cursor: wait;
-            opacity: 0.6;
-            transform: none;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 9px;
-        }
-
-        .form-actions .btn-primary {
-            flex: 1;
-        }
-
-        .message {
-            display: none;
-            margin-bottom: 17px;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 11px;
-            line-height: 1.6;
-        }
-
-        .message.show {
-            display: block;
-        }
-
-        .message.success {
-            border-color: rgba(80, 227, 164, 0.25);
-            background: rgba(80, 227, 164, 0.06);
-            color: var(--green);
-        }
-
-        .message.error {
-            border-color: rgba(255, 107, 129, 0.25);
-            background: rgba(255, 107, 129, 0.06);
-            color: var(--red);
-        }
-
-        .panel-footer {
+        .alert-item {
             display: flex;
             justify-content: space-between;
-            gap: 12px;
-            padding: 15px 22px;
+            gap: 10px;
+            padding: 12px 0;
             border-top: 1px solid var(--border);
-            color: var(--muted);
-            font-family: 'Space Mono', monospace;
-            font-size: 9px;
-        }
-
-        .footer-status {
-            color: var(--green);
+            font-size: 11px;
         }
 
         .toast {
             position: fixed;
-            right: 25px;
-            bottom: 25px;
-            z-index: 10;
-            max-width: min(380px, calc(100vw - 40px));
-            padding: 14px 18px;
-            border: 1px solid var(--border);
+            right: 20px;
+            bottom: 20px;
+            background: #172437;
+            border: 1px solid #58e1f255;
             border-radius: 10px;
-            background: #151c29;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            padding: 14px 18px;
             color: var(--text);
             font-size: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(10px);
-            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 10px 35px #0008;
+            display: none;
+            max-width: calc(100vw - 40px);
+            z-index: 10;
         }
 
         .toast.show {
-            opacity: 1;
-            transform: translateY(0);
+            display: block;
         }
 
-        @media (max-width: 1200px) {
-            .content-grid {
-                grid-template-columns: minmax(0, 1fr) 300px;
-            }
-
-            .main {
-                padding-right: 24px;
-                padding-left: 24px;
-            }
-
-            .stats {
-                gap: 12px;
-            }
-
-            .stat-card {
-                padding: 17px;
-            }
-        }
-
-        @media (max-width: 950px) {
-            .sidebar {
-                width: 190px;
-            }
-
-            .content-grid {
+        @media (max-width: 1150px) {
+            .content {
                 grid-template-columns: 1fr;
             }
 
-            .form-panel {
-                grid-row: 1;
+            .right-column {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .stats {
@@ -694,78 +455,42 @@
             }
         }
 
-        @media (max-width: 650px) {
-            .layout {
-                display: block;
-            }
-
+        @media (max-width: 700px) {
             .sidebar {
-                width: 100%;
-                padding: 16px;
-                border-right: 0;
-                border-bottom: 1px solid var(--border);
+                width: 65px;
+                padding: 20px 7px;
             }
 
             .brand {
-                padding: 0 4px 15px;
+                font-size: 17px;
+                overflow: hidden;
             }
 
-            .nav-label,
-            .nav-item:not(.active),
-            .sidebar-bottom {
+            .brand span, .brand small, .nav-label,
+            .nav-text, .sidebar-footer {
                 display: none;
             }
 
-            .nav-item.active {
-                margin-bottom: 0;
+            .nav-item {
+                text-align: center;
+                padding: 13px 3px;
             }
 
             .main {
-                padding: 25px 14px 35px;
+                padding: 20px 12px;
             }
 
-            .topbar {
+            .header {
                 align-items: flex-start;
-                margin-bottom: 26px;
+                flex-direction: column;
             }
 
-            .connection {
-                display: none;
+            .right-column {
+                grid-template-columns: 1fr;
             }
 
-            .stats {
-                gap: 10px;
-            }
-
-            .stat-card {
-                padding: 15px;
-            }
-
-            .stat-number {
-                font-size: 26px;
-            }
-
-            .stat-label {
-                font-size: 10px;
-            }
-
-            .panel-header,
-            .toolbar {
-                padding-right: 14px;
-                padding-left: 14px;
-            }
-
-            .form-body {
-                padding: 16px;
-            }
-
-            td, th {
-                padding: 13px 12px;
-            }
-
-            .panel-footer {
-                padding-right: 14px;
-                padding-left: 14px;
+            .panel-header, .search-row {
+                padding: 14px;
             }
         }
     </style>
@@ -776,224 +501,156 @@
 
     <aside class="sidebar">
         <div class="brand">
-            <div class="brand-icon">P</div>
-            <div>
-                <div class="brand-name">PRODUCT<span>VAULT</span></div>
-                <div class="brand-subtitle">INVENTORY SYSTEM</div>
-            </div>
+            Product<span>Vault</span>
+            <small>INVENTORY CONTROL</small>
         </div>
 
         <div class="nav-label">WORKSPACE</div>
 
-        <div class="nav-item active">
-            <span class="nav-icon">▦</span>
-            <span>Overview</span>
-        </div>
+        <div class="nav-item active" id="overviewNav">▦ <span class="nav-text">Overview</span></div>
+        <div class="nav-item" id="inventoryNav">▤ <span class="nav-text">Inventory</span></div>
+        <div class="nav-item" id="addNav">＋ <span class="nav-text">Add product</span></div>
 
-        <div class="nav-item">
-            <span class="nav-icon">◈</span>
-            <span>Products</span>
-        </div>
-
-        <div class="nav-item">
-            <span class="nav-icon">⌘</span>
-            <span>Inventory</span>
-        </div>
-
-        <div class="nav-label" style="margin-top: 30px;">SYSTEM</div>
-
-        <div class="nav-item">
-            <span class="nav-icon">⚙</span>
-            <span>Settings</span>
-        </div>
-
-        <div class="sidebar-bottom">
-            <strong><span class="status-dot"></span>API CONNECTION</strong>
-            <p>Product service status is displayed here. Your data is stored in your configured database.</p>
+        <div class="sidebar-footer">
+            <strong>● Workspace ready</strong>
+            <p>Inventory dashboard<br>All prices in Indian Rupees (₹).</p>
         </div>
     </aside>
 
     <main class="main">
-        <header class="topbar">
+        <header class="header">
             <div>
-                <div class="eyebrow">CONTROL CENTER / 01</div>
-                <h1>Inventory Overview</h1>
-                <p class="subtitle">Manage your products, monitor stock and keep your inventory organized.</p>
+                <div class="eyebrow">INVENTORY / OVERVIEW</div>
+                <h1>Inventory dashboard</h1>
+                <p class="subtitle">Monitor your products, stock and inventory value.</p>
             </div>
 
-            <div class="topbar-right">
-                <div class="connection">
-                    <span class="status-dot"></span>
-                    <span id="connectionText">CONNECTING</span>
-                </div>
-                <div class="avatar">PV</div>
-            </div>
+            <button class="primary" id="topAddButton" type="button">＋ Add product</button>
         </header>
 
         <section class="stats">
-            <article class="stat-card" style="--accent: var(--cyan); --glow: rgba(81,229,255,.12);">
-                <div class="stat-top">
-                    <span class="stat-label">Total Products</span>
-                    <span class="stat-icon">◈</span>
-                </div>
-                <div class="stat-number" id="totalProducts">—</div>
-                <div class="stat-foot">Products in database</div>
-            </article>
+            <div class="stat">
+                <div class="stat-label">Total products</div>
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-note">Products in inventory</div>
+            </div>
 
-            <article class="stat-card" style="--accent: var(--purple); --glow: rgba(167,139,250,.12);">
-                <div class="stat-top">
-                    <span class="stat-label">Total Units</span>
-                    <span class="stat-icon">▤</span>
-                </div>
-                <div class="stat-number" id="totalUnits">—</div>
-                <div class="stat-foot">Combined stock quantity</div>
-            </article>
+            <div class="stat">
+                <div class="stat-label">Total stock units</div>
+                <div class="stat-value" id="totalUnits">0</div>
+                <div class="stat-note">Units available</div>
+            </div>
 
-            <article class="stat-card" style="--accent: var(--green); --glow: rgba(80,227,164,.12);">
-                <div class="stat-top">
-                    <span class="stat-label">Inventory Value</span>
-                    <span class="stat-icon">₹</span>
-                </div>
-                <div class="stat-number" id="inventoryValue">—</div>
-                <div class="stat-foot">Price × quantity</div>
-            </article>
+            <div class="stat">
+                <div class="stat-label">Inventory value</div>
+                <div class="stat-value" id="inventoryValue">₹0.00</div>
+                <div class="stat-note">Price × quantity</div>
+            </div>
 
-            <article class="stat-card" style="--accent: var(--yellow); --glow: rgba(255,209,102,.12);">
-                <div class="stat-top">
-                    <span class="stat-label">Low Stock</span>
-                    <span class="stat-icon">△</span>
-                </div>
-                <div class="stat-number" id="lowStock">—</div>
-                <div class="stat-foot">Products with 5 or fewer units</div>
-            </article>
+            <div class="stat">
+                <div class="stat-label">Low-stock products</div>
+                <div class="stat-value" id="lowStockCount">0</div>
+                <div class="stat-note">Five units or fewer</div>
+            </div>
         </section>
 
-        <section class="content-grid">
-
-            <article class="panel">
+        <section class="content">
+            <div class="panel" id="inventoryPanel">
                 <div class="panel-header">
                     <div>
-                        <h2 class="panel-title">Product Inventory</h2>
-                        <p class="panel-description">Products retrieved from your FastAPI database.</p>
+                        <div class="panel-title">Product inventory</div>
+                        <div class="panel-subtitle">Search and manage your products</div>
                     </div>
-                    <span class="count-badge" id="productCount">0 ITEMS</span>
+                    <button class="secondary" id="refreshButton" type="button">↻ Refresh</button>
                 </div>
 
-                <div class="toolbar">
-                    <input
-                        class="search"
-                        id="searchInput"
-                        type="search"
-                        placeholder="Search by product name or description..."
-                        aria-label="Search products"
-                    >
-                    <button class="btn btn-secondary" id="refreshBtn" type="button">↻ Refresh</button>
+                <div class="search-row">
+                    <input class="search" id="searchInput" type="search" placeholder="Search products...">
+
+                    <select id="stockFilter" aria-label="Filter products by stock">
+                        <option value="all">All stock</option>
+                        <option value="in">In stock</option>
+                        <option value="low">Low stock</option>
+                        <option value="out">Out of stock</option>
+                    </select>
                 </div>
 
                 <div class="table-wrap">
                     <table>
                         <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Actions</th>
+                            <th>PRODUCT</th>
+                            <th>PRICE</th>
+                            <th>QUANTITY</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
                         </tr>
                         </thead>
-                        <tbody id="productTable">
-                        <tr>
-                            <td colspan="4" class="empty">Loading products from API...</td>
-                        </tr>
+                        <tbody id="productRows">
+                        <tr><td colspan="5" class="empty">Loading products...</td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="panel-footer">
-                    <span id="tableStatus">WAITING FOR DATA</span>
-                    <span class="footer-status" id="lastUpdated">● INITIALIZING</span>
+                <div class="table-footer">
+                    <span id="resultCount">0 products</span>
+                    <span>Currency: INR ₹</span>
                 </div>
-            </article>
+            </div>
 
-            <article class="panel form-panel">
-                <div class="panel-header">
-                    <div>
-                        <h2 class="panel-title" id="formTitle">Add New Product</h2>
-                        <p class="panel-description">Enter the product details below.</p>
-                    </div>
-                    <span class="count-badge" id="formMode">NEW</span>
-                </div>
-
-                <div class="form-body">
-                    <div class="form-note">
-                        PRODUCT REGISTRY<br>
-                        Add a product to your inventory database. Required fields must be valid.
+            <div class="right-column">
+                <div class="panel" id="formPanel">
+                    <div class="panel-header">
+                        <div>
+                            <div class="panel-title" id="formTitle">Add a product</div>
+                            <div class="panel-subtitle">Enter the product details</div>
+                        </div>
                     </div>
 
-                    <div id="formMessage" class="message" role="status"></div>
+                    <form class="form-body" id="productForm">
+                        <input type="hidden" id="productId">
 
-                    <form id="productForm">
                         <div class="field">
-                            <label for="name">Product Name *</label>
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                maxlength="150"
-                                placeholder="e.g. Wireless Mouse"
-                                required
-                            >
+                            <label for="productName">Product name *</label>
+                            <input id="productName" type="text" required maxlength="120"
+                                   placeholder="e.g. Wireless headphones">
                         </div>
 
                         <div class="field">
-                            <label for="description">Description</label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                maxlength="1000"
-                                placeholder="Describe the product..."
-                            ></textarea>
+                            <label for="productDescription">Description</label>
+                            <textarea id="productDescription" maxlength="500"
+                                      placeholder="Product description"></textarea>
                         </div>
 
-                        <div class="field-row">
-                            <div class="field">
-                                <label for="price">Price (₹) *</label>
-                                <input
-                                    id="price"
-                                    name="price"
-                                    type="number"
-                                    min="0.01"
-                                    step="0.01"
-                                    placeholder="799"
-                                    required
-                                >
-                            </div>
-
-                            <div class="field">
-                                <label for="quantity">Quantity *</label>
-                                <input
-                                    id="quantity"
-                                    name="quantity"
-                                    type="number"
-                                    min="0"
-                                    step="1"
-                                    placeholder="25"
-                                    required
-                                >
-                            </div>
+                        <div class="field">
+                            <label for="productPrice">Price (₹) *</label>
+                            <input id="productPrice" type="number" min="0" step="0.01"
+                                   required placeholder="0.00">
                         </div>
 
-                        <div class="form-actions">
-                            <button class="btn btn-primary" id="submitBtn" type="submit">
-                                + Add Product
-                            </button>
-                            <button class="btn btn-secondary" id="cancelEditBtn" type="button" hidden>
-                                Cancel
-                            </button>
+                        <div class="field">
+                            <label for="productQuantity">Quantity *</label>
+                            <input id="productQuantity" type="number" min="0" step="1"
+                                   required placeholder="0">
+                        </div>
+
+                        <div class="form-buttons">
+                            <button class="primary" id="saveButton" type="submit">Save product</button>
+                            <button class="secondary" id="cancelButton" type="button" hidden>Cancel</button>
                         </div>
                     </form>
                 </div>
-            </article>
 
+                <div class="panel">
+                    <div class="alerts">
+                        <div class="panel-title">Stock alerts</div>
+                        <p>Products with five units or fewer are listed here so you can plan restocking.</p>
+                        <div id="lowStockList">
+                            <div class="empty">No stock alerts.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 </div>
@@ -1001,387 +658,394 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-    /*
-      ProductVault frontend.
-      API endpoints expected:
-        GET    /products
-        POST   /product
-        PUT    /product/{product_id}
-        DELETE /product/{product_id}
+"use strict";
 
-      This script expects each product to contain:
-        product_id, name, description, price, quantity
-    */
+/*
+  Expected FastAPI endpoints:
+  GET    /products
+  POST   /product
+  PUT    /product/{id}
+  DELETE /product/{id}
 
-    const API = {
-        list: "/products",
-        create: "/product",
-        item: (id) => `/product/₹{encodeURIComponent(id)}`
-    };
+  Expected fields:
+  id or product_id, name, description, price, quantity
 
-    let products = [];
-    let editingId = null;
-    let toastTimer = null;
+  If your backend uses different routes, change the API object below.
+*/
 
-    const ₹ = (id) => document.getElementById(id);
+const API = {
+    list: "/products",
+    create: "/product",
+    item: (id) => "/product/" + encodeURIComponent(id)
+};
 
-    function escapeHTML(value) {
-        return String(value ?? "").replace(/[&<>"']/g, (character) => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        })[character]);
+let products = [];
+let toastTimer;
+
+const $ = (id) => document.getElementById(id);
+
+function money(value) {
+    const amount = Number(value);
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(Number.isFinite(amount) ? amount : 0);
+}
+
+function safe(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+function numeric(value) {
+    const result = Number(value);
+    return Number.isFinite(result) ? result : 0;
+}
+
+function getId(product) {
+    return product.product_id ?? product.id;
+}
+
+function statusOf(product) {
+    const quantity = numeric(product.quantity);
+
+    if (quantity <= 0) return "out";
+    if (quantity <= 5) return "low";
+    return "in";
+}
+
+function showToast(message) {
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
+async function apiRequest(url, options = {}) {
+    const headers = { ...(options.headers || {}) };
+
+    if (options.body) {
+        headers["Content-Type"] = "application/json";
     }
 
-    function formatCurrency(value) {
-        return new Intl.NumberFormat("en-IN", {
-            style: "currency",
-            currency: "INR",
-            maximumFractionDigits: 2
-        }).format(Number(value) || 0);
+    const response = await fetch(url, {
+        ...options,
+        headers
+    });
+
+    if (!response.ok) {
+        let message = `Request failed: ${response.status}`;
+
+        try {
+            const data = await response.json();
+            if (data.detail) {
+                message = typeof data.detail === "string"
+                    ? data.detail
+                    : JSON.stringify(data.detail);
+            }
+        } catch (_) {}
+
+        throw new Error(message);
     }
 
-    function showToast(message) {
-        const toast = ₹("toast");
-        toast.textContent = message;
-        toast.classList.add("show");
+    if (response.status === 204) return null;
 
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-            toast.classList.remove("show");
-        }, 3500);
+    const type = response.headers.get("content-type") || "";
+
+    if (type.includes("application/json")) {
+        return response.json();
     }
 
-    function showMessage(message, type = "success") {
-        const box = ₹("formMessage");
-        box.textContent = message;
-        box.className = `message show ₹{type}`;
+    return null;
+}
+
+function normalizeProducts(data) {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.products)) return data.products;
+    if (Array.isArray(data?.items)) return data.items;
+    return [];
+}
+
+async function loadProducts() {
+    $("productRows").innerHTML =
+        '<tr><td colspan="5" class="empty">Loading products...</td></tr>';
+
+    try {
+        const data = await apiRequest(API.list);
+        products = normalizeProducts(data);
+        render();
+    } catch (error) {
+        $("productRows").innerHTML =
+            '<tr><td colspan="5" class="empty">Could not load products. Check your FastAPI server and the GET /products endpoint.</td></tr>';
+
+        $("lowStockList").innerHTML =
+            '<div class="empty">Stock alerts unavailable.</div>';
+
+        $("resultCount").textContent = "Inventory unavailable";
+        updateStats();
+        showToast(error.message);
     }
+}
 
-    function hideMessage() {
-        ₹("formMessage").className = "message";
-        &#8377;("formMessage").textContent = "";
-    }
+function updateStats() {
+    const totalUnits = products.reduce(
+        (sum, product) => sum + numeric(product.quantity), 0
+    );
 
-    function normalizeProduct(product) {
-        return {
-            ...product,
-            product_id: product.product_id ?? product.id,
-            name: product.name ?? "Unnamed product",
-            description: product.description ?? "",
-            price: Number(product.price) || 0,
-            quantity: Number(product.quantity) || 0
-        };
-    }
+    const inventoryValue = products.reduce(
+        (sum, product) => sum + numeric(product.price) * numeric(product.quantity), 0
+    );
 
-    function stockClass(quantity) {
-        if (quantity === 0) return "out";
-        if (quantity <= 5) return "low";
-        return "";
-    }
+    const lowStock = products.filter(
+        product => numeric(product.quantity) <= 5
+    ).length;
 
-    function renderProducts() {
-        const query = &#8377;("searchInput").&#8377;alue.trim().toLowerCase();
+    $("totalProducts").textContent = products.length.toLocaleString("en-IN");
+    $("totalUnits").textContent = totalUnits.toLocaleString("en-IN");
+    $("inventoryValue").textContent = money(inventoryValue);
+    $("lowStockCount").textContent = lowStock.toLocaleString("en-IN");
+}
 
-        const filtered = products.filter((product) => {
-            const searchable = `&#8377;{product.name} &#8377;{product.description} &#8377;{product.product_id}`.toLowerCase();
-            return searchable.includes(query);
-        });
+function render() {
+    updateStats();
 
-        &#8377;("productCount").textContent = `&#8377;{filtered.length} ITEM&#8377;{filtered.length === 1 ? "" : "S"}`;
+    const query = $("searchInput").value.trim().toLowerCase();
+    const filter = $("stockFilter").value;
 
-        const table = &#8377;("productTable");
+    const filtered = products.filter(product => {
+        const searchable = [
+            product.name,
+            product.description,
+            getId(product)
+        ].join(" ").toLowerCase();
 
-        if (!filtered.length) {
-            table.innerHTML = `
-                <tr>
-                    <td colspan="4" class="empty">
-                        <strong>&#8377;{query ? "No matching products" : "Your in&#8377;entory is empty"}</strong>
-                        &#8377;{query ? "Try another search term." : "Use the form to add your first product."}
-                    </td>
-                </tr>
-            `;
-            return;
-        }
+        return searchable.includes(query) &&
+            (filter === "all" || statusOf(product) === filter);
+    });
 
-        table.innerHTML = filtered.map((product) => {
-            const id = escapeHTML(product.product_id);
-            const name = escapeHTML(product.name);
-            const description = escapeHTML(product.description || "No description pro&#8377;ided");
-            const quantity = product.quantity;
-            const badgeClass = stockClass(quantity);
+    $("resultCount").textContent =
+        `${filtered.length} ${filtered.length === 1 ? "product" : "products"}`;
+
+    if (filtered.length === 0) {
+        $("productRows").innerHTML =
+            `<tr><td colspan="5" class="empty">${
+                products.length
+                    ? "No products match your search."
+                    : "Your inventory is empty. Add your first product using the form."
+            }</td></tr>`;
+    } else {
+        $("productRows").innerHTML = filtered.map(product => {
+            const status = statusOf(product);
+            const labels = {
+                in: "In stock",
+                low: "Low stock",
+                out: "Out of stock"
+            };
+
+            const classes = {
+                in: "in-stock",
+                low: "low-stock",
+                out: "out-stock"
+            };
+
+            const id = getId(product);
 
             return `
                 <tr>
                     <td>
-                        <di&#8377; class="product-name">&#8377;{name}</div>
-                        <div class="product-description">&#8377;{description}</div>
-                        <div class="product-id" style="margin-top: 7px;">ID: &#8377;{id}</div>
+                        <div class="product-name">${safe(product.name || "Untitled product")}</div>
+                        <div class="product-description">${safe(product.description || "No description")}</div>
                     </td>
-                    <td>&#8377;{formatCurrency(product.price)}</td>
-                    <td>
-                        <span class="stock &#8377;{badgeClass}">
-                            &#8377;{quantity === 0 ? "Out of stock" : `&#8377;{quantity} units`}
-                        </span>
-                    </td>
+                    <td class="price">${safe(money(product.price))}</td>
+                    <td>${numeric(product.quantity).toLocaleString("en-IN")}</td>
+                    <td><span class="badge ${classes[status]}">${labels[status]}</span></td>
                     <td>
                         <div class="actions">
-                            <button class="icon-btn" type="button" title="Edit product"
-                                data-action="edit" data-id="&#8377;{id}">✎</button>
-                            <button class="icon-btn delete" type="button" title="Delete product"
-                                data-action="delete" data-id="&#8377;{id}">×</button>
+                            <button class="action-btn" type="button" data-edit="${safe(id)}">Edit</button>
+                            <button class="action-btn" type="button" data-delete="${safe(id)}">Delete</button>
                         </div>
                     </td>
-                </tr>
-            `;
+                </tr>`;
         }).join("");
     }
 
-    function updateStats() {
-        const totalUnits = products.reduce((sum, product) => sum + product.quantity, 0);
-        const inventoryValue = products.reduce(
-            (sum, product) => sum + product.price * product.quantity, 0
-        );
-        const lowStock = products.filter(
-            (product) => product.quantity <= 5
-        ).length;
+    const alerts = products
+        .filter(product => numeric(product.quantity) <= 5)
+        .sort((a, b) => numeric(a.quantity) - numeric(b.quantity))
+        .slice(0, 5);
 
-        &#8377;("totalProducts").textContent = products.length.toLocaleString("en-IN");
-        &#8377;("totalUnits").textContent = totalUnits.toLocaleString("en-IN");
+    if (!alerts.length) {
+        $("lowStockList").innerHTML =
+            '<div class="empty">No stock alerts right now.</div>';
+    } else {
+        $("lowStockList").innerHTML = alerts.map(product => {
+            const quantity = numeric(product.quantity);
 
-        &#8377;("inventoryValue").textContent = new Intl.NumberFormat("en-IN", {
-            style: "currency",
-            currency: "INR",
-            notation: inventoryValue >= 1000000 ? "compact" : "standard",
-            maximumFractionDigits: 1
-        }).format(inventoryValue);
+            return `
+                <div class="alert-item">
+                    <div>
+                        <strong>${safe(product.name || "Untitled product")}</strong>
+                        <div style="color:var(--muted);margin-top:5px">
+                            ${quantity === 0 ? "Out of stock" : quantity + " units remaining"}
+                        </div>
+                    </div>
+                    <span class="badge ${quantity === 0 ? "out-stock" : "low-stock"}">
+                        ${quantity}
+                    </span>
+                </div>`;
+        }).join("");
+    }
+}
 
-        &#8377;("lowStock").textContent = lowStock.toLocaleString("en-IN");
+function resetForm() {
+    $("productForm").reset();
+    $("productId").value = "";
+    $("formTitle").textContent = "Add a product";
+    $("saveButton").textContent = "Save product";
+    $("cancelButton").hidden = true;
+}
+
+function editProduct(id) {
+    const product = products.find(
+        item => String(getId(item)) === String(id)
+    );
+
+    if (!product) {
+        showToast("Product not found.");
+        return;
     }
 
-    async function apiRequest(url, options = {}) {
-        const response = await fetch(url, {
-            ...options,
-            headers: {
-                ...(options.body ? { "Content-Type": "application/json" } : {}),
-                ...(options.headers || {})
-            }
-        });
+    $("productId").value = getId(product);
+    $("productName").value = product.name || "";
+    $("productDescription").value = product.description || "";
+    $("productPrice").value = numeric(product.price);
+    $("productQuantity").value = numeric(product.quantity);
 
-        if (!response.ok) {
-            let detail = `Request failed with status &#8377;{response.status}`;
+    $("formTitle").textContent = "Edit product";
+    $("saveButton").textContent = "Update product";
+    $("cancelButton").hidden = false;
 
-            try {
-                const body = await response.json();
-                if (body.detail) {
-                    detail = typeof body.detail === "string"
-                        ? body.detail
-                        : JSON.stringify(body.detail);
-                }
-            } catch {
-                // Keep the HTTP status message if the response isn't JSON.
-            }
+    $("formPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
-            throw new Error(detail);
-        }
+$("productForm").addEventListener("submit", async event => {
+    event.preventDefault();
 
-        if (response.status === 204) return null;
+    const id = $("productId").value;
+    const price = Number($("productPrice").value);
+    const quantity = Number($("productQuantity").value);
 
-        const text = await response.text();
-        return text ? JSON.parse(text) : null;
+    if (!Number.isFinite(price) || price < 0 ||
+        !Number.isInteger(quantity) || quantity < 0) {
+        showToast("Enter a valid price and a whole-number quantity.");
+        return;
     }
 
-    async function loadProducts() {
-        &#8377;("tableStatus").textContent = "FETCHING PRODUCTS...";
-        &#8377;("connectionText").textContent = "CONNECTING";
+    const payload = {
+        name: $("productName").value.trim(),
+        description: $("productDescription").value.trim(),
+        price,
+        quantity
+    };
 
-        try {
-            const data = await apiRequest(API.list);
-
-            if (!Array.isArray(data)) {
-                throw new Error("The GET /products endpoint did not return a JSON list.");
-            }
-
-            products = data.map(normalizeProduct);
-            renderProducts();
-            updateStats();
-
-            &#8377;("connectionText").textContent = "CONNECTED";
-            &#8377;("tableStatus").textContent = `&#8377;{products.length} PRODUCTS LOADED`;
-            &#8377;("lastUpdated").textContent = `● UPDATED &#8377;{new Date().toLocaleTimeString()}`;
-        } catch (error) {
-            &#8377;("connectionText").textContent = "API ERROR";
-            &#8377;("tableStatus").textContent = "FAILED TO LOAD PRODUCTS";
-            &#8377;("productTable").innerHTML = `
-                <tr>
-                    <td colspan="4" class="empty">
-                        <strong>Unable to load inventory</strong>
-                        &#8377;{escapeHTML(error.message)}
-                        <br><br>
-                        Confirm that your FastAPI server is running and GET /products works in Swagger.
-                    </td>
-                </tr>
-            `;
-
-            &#8377;("totalProducts").textContent = "—";
-            &#8377;("totalUnits").textContent = "—";
-            &#8377;("inventoryValue").textContent = "—";
-            &#8377;("lowStock").textContent = "—";
-        }
+    if (!payload.name) {
+        showToast("Product name is required.");
+        return;
     }
 
-    function resetForm() {
-        editingId = null;
-        &#8377;("productForm").reset();
-        &#8377;("formTitle").textContent = "Add New Product";
-        &#8377;("formMode").textContent = "NEW";
-        &#8377;("submitBtn").textContent = "+ Add Product";
-        &#8377;("cancelEditBtn").hidden = true;
-        hideMessage();
-    }
+    const button = $("saveButton");
+    button.disabled = true;
+    button.textContent = id ? "Updating..." : "Saving...";
 
-    function beginEdit(id) {
-        const product = products.find(
-            (item) => String(item.product_id) === String(id)
-        );
-
-        if (!product) {
-            showToast("Product not found. Refresh the inventory.");
-            return;
-        }
-
-        editingId = product.product_id;
-
-        &#8377;("name").value = product.name;
-        &#8377;("description").value = product.description;
-        &#8377;("price").value = product.price;
-        &#8377;("quantity").value = product.quantity;
-
-        &#8377;("formTitle").textContent = "Edit Product";
-        &#8377;("formMode").textContent = `EDIT #&#8377;{product.product_id}`;
-        &#8377;("submitBtn").textContent = "Save Changes";
-        &#8377;("cancelEditBtn").hidden = false;
-
-        hideMessage();
-        &#8377;("name").focus();
-
-        if (window.innerWidth < 950) {
-            document.querySelector(".form-panel").scrollIntoView({
-                behavior: "smooth",
-                block: "start"
+    try {
+        if (id) {
+            await apiRequest(API.item(id), {
+                method: "PUT",
+                body: JSON.stringify(payload)
+            });
+        } else {
+            await apiRequest(API.create, {
+                method: "POST",
+                body: JSON.stringify(payload)
             });
         }
+
+        resetForm();
+        await loadProducts();
+        showToast(id ? "Product updated successfully." : "Product added successfully.");
+    } catch (error) {
+        showToast(error.message || "Could not save product.");
+    } finally {
+        button.disabled = false;
+        button.textContent = $("productId").value ? "Update product" : "Save product";
+    }
+});
+
+$("productRows").addEventListener("click", async event => {
+    const editButton = event.target.closest("[data-edit]");
+    const deleteButton = event.target.closest("[data-delete]");
+
+    if (editButton) {
+        editProduct(editButton.dataset.edit);
+        return;
     }
 
-    async function deleteProduct(id) {
+    if (deleteButton) {
+        const id = deleteButton.dataset.delete;
         const product = products.find(
-            (item) => String(item.product_id) === String(id)
+            item => String(getId(item)) === String(id)
         );
 
         if (!product) return;
 
-        if (!confirm(`Delete "&#8377;{product.name}" from your inventory?`)) return;
+        const confirmed = window.confirm(
+            `Delete "${product.name}" from your inventory?`
+        );
+
+        if (!confirmed) return;
 
         try {
             await apiRequest(API.item(id), { method: "DELETE" });
-
-            if (String(editingId) === String(id)) {
-                resetForm();
-            }
-
-            showToast("Product deleted successfully.");
-            await loadProducts();
-        } catch (error) {
-            showToast(`Delete failed: &#8377;{error.message}`);
-        }
-    }
-
-    &#8377;("productForm").addEventListener("submit", async (event) => {
-        event.preventDefault();
-        hideMessage();
-
-        const name = &#8377;("name").value.trim();
-        const description = &#8377;("description").value.trim();
-        const price = Number(&#8377;("price").value);
-        const quantity = Number(&#8377;("quantity").value);
-
-        if (!name) {
-            showMessage("Product name is required.", "error");
-            return;
-        }
-
-        if (!Number.isFinite(price) || price <= 0) {
-            showMessage("Price must be greater than zero.", "error");
-            return;
-        }
-
-        if (!Number.isInteger(quantity) || quantity < 0) {
-            showMessage("Quantity must be a non-negative whole number.", "error");
-            return;
-        }
-
-        const payload = { name, description, price, quantity };
-        const button = &#8377;("submitBtn");
-
-        button.disabled = true;
-        button.textContent = editingId !== null ? "Saving..." : "Adding...";
-
-        try {
-            if (editingId !== null) {
-                await apiRequest(API.item(editingId), {
-                    method: "PUT",
-                    body: JSON.stringify(payload)
-                });
-
-                showMessage("Product updated successfully.", "success");
-                showToast("Product updated.");
-            } else {
-                await apiRequest(API.create, {
-                    method: "POST",
-                    body: JSON.stringify(payload)
-                });
-
-                showMessage("Product added successfully.", "success");
-                showToast("Product added to inventory.");
-            }
-
             resetForm();
             await loadProducts();
+            showToast("Product deleted successfully.");
         } catch (error) {
-            showMessage(error.message, "error");
-        } finally {
-            button.disabled = false;
-
-            if (editingId !== null) {
-                button.textContent = "Save Changes";
-            } else {
-                button.textContent = "+ Add Product";
-            }
+            showToast(error.message || "Could not delete product.");
         }
-    });
+    }
+});
 
-    &#8377;("productTable").addEventListener("click", (event) => {
-        const button = event.target.closest("button[data-action]");
-        if (!button) return;
+$("cancelButton").addEventListener("click", resetForm);
+$("searchInput").addEventListener("input", render);
+$("stockFilter").addEventListener("change", render);
+$("refreshButton").addEventListener("click", loadProducts);
 
-        const id = button.dataset.id;
+function scrollToForm() {
+    $("formPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+    $("productName").focus({ preventScroll: true });
+}
 
-        if (button.dataset.action === "edit") {
-            beginEdit(id);
-        }
+$("topAddButton").addEventListener("click", scrollToForm);
+$("addNav").addEventListener("click", scrollToForm);
 
-        if (button.dataset.action === "delete") {
-            deleteProduct(id);
-        }
-    });
+$("inventoryNav").addEventListener("click", () => {
+    $("inventoryPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
-    &#8377;("searchInput").addEventListener("input", renderProducts);
-    &#8377;("refreshBtn").addEventListener("click", loadProducts);
-    &#8377;("cancelEditBtn").addEventListener("click", resetForm);
+$("overviewNav").addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
-    loadProducts();
+loadProducts();
 </script>
 </body>
 </html>
