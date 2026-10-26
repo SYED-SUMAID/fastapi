@@ -162,8 +162,8 @@ This README shows only a few examples to keep things short. To see the remaining
 
 ### API Documentation
 
-
+![alt text](<Screenshot From 2026-10-25 21-06-05.png>)
 
 ### Dashboard
 
-<!-- Add dashboard screenshot here -->
+![alt text](<Screenshot From 2026-10-26 10-17-10.png>)
